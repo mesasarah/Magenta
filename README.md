@@ -62,10 +62,6 @@ Database (Postgres + pgvector)
 | `src/components/VideoPlayer.tsx` | Custom player with evidence markers |
 
 ## Notes & limits
-
-- Runs entirely on Lovable Cloud — no external accounts, API keys or Docker
-  required. AI calls go through the Lovable AI Gateway (`LOVABLE_API_KEY` is
-  provisioned automatically and stays server-side).
 - Upload limit ~25MB per file (larger media should be trimmed or compressed).
 - The app is an open demo (no login). Add authentication before storing
   sensitive corporate content.
