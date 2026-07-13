@@ -1,67 +1,134 @@
-# Magenta Mind — Multimodal RAG Enterprise System
+<div align="center">
 
-A production-style multimodal Retrieval-Augmented Generation system for
-enterprise knowledge and video analysis, built on Lovable Cloud.
+# 🧠 Magenta Mind
 
-Upload documents (PDF/TXT) and media (video/audio); the ingestion pipeline
-extracts text, time-stamped transcripts and visual descriptions, embeds
-everything into a vector index, and answers natural-language questions with
-time-stamped, clickable citations.
+### Enterprise Multimodal RAG Platform
 
-## Architecture
+*Search • Analyze • Understand*
 
+<br>
+
+![React](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)
+![pgvector](https://img.shields.io/badge/VectorDB-pgvector-7B3FE4?style=flat-square)
+![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+
+</div>
+
+---
+
+## ✦ What is Magenta Mind?
+
+Magenta Mind is an enterprise-grade **Multimodal Retrieval-Augmented Generation (RAG)** platform that transforms documents, videos, and audio into an intelligent, searchable knowledge base.
+
+Extract text, transcribe media, generate embeddings, and retrieve grounded AI responses with timestamped citations and contextual evidence.
+
+---
+
+## ✦ Features
+
+- 📄 PDF & Document Processing
+- 🎥 Video & Audio Transcription
+- 🧠 Multimodal RAG Search
+- 🔍 Semantic Vector Retrieval
+- ⏱ Timestamped AI Citations
+- 📚 Enterprise Knowledge Base
+- 🎬 Interactive Video Evidence Viewer
+- ⚡ Fast Similarity Search with pgvector
+- 📊 File Processing Pipeline
+- ☁️ Cloud Storage Integration
+
+---
+
+## ✦ Tech Stack
+
+| Layer | Technology |
+|--------|------------|
+| **Frontend** | React 19 • TanStack Start • Tailwind CSS v4 |
+| **Backend** | TanStack Server Functions |
+| **Database** | PostgreSQL • pgvector |
+| **AI** | OpenAI • Embeddings • Multimodal RAG |
+| **Storage** | Cloud Storage |
+| **Deployment** | Lovable Cloud |
+
+---
+
+## ✦ Architecture
+
+```text
+Documents • Audio • Video
+            │
+            ▼
+     AI Processing Pipeline
+            │
+ Text • OCR • Transcription
+            │
+       Embedding Generation
+            │
+         pgvector Index
+            │
+     Semantic Retrieval
+            │
+     AI Response + Citations
 ```
-Browser (React 19 / TanStack Start / Tailwind v4)
-  ├─ Upload page ── direct upload to Cloud Storage (private "media" bucket)
-  ├─ Library ────── polls file status (processing → indexed / failed)
-  ├─ Search ─────── split view: AI answer + citations | evidence viewer
-  └─ File detail ── custom video player + synced transcript
 
-Server functions (TanStack createServerFn)
-  ├─ processFile ── ingestion pipeline
-  │     1. download raw file from storage
-  │     2. documents → page-by-page text extraction (vision LLM, OCR included)
-  │        video    → time-stamped transcript + keyframe visual descriptions
-  │        audio    → time-stamped transcript
-  │     3. chunking (transcript segments / visual moments / page text)
-  │     4. embeddings (openai/text-embedding-3-small, 1536 dims)
-  │     5. insert into pgvector index
-  └─ searchKnowledge ── retrieval & reasoning
-        1. embed the query
-        2. similarity search across ALL modalities (match_chunks, HNSW index)
-        3. temporal reranking: hits from the same video within a 25s window
-           merge into one source, so spoken + visual evidence at the same
-           moment are reasoned about together
-        4. LLM synthesis with numbered citations [n]
+---
 
-Database (Postgres + pgvector)
-  ├─ files   (metadata, status, duration, page_count)
-  ├─ chunks  (content, modality, timestamps/page, embedding vector(1536))
-  └─ queries (search history)
+## ✦ Quick Start
+
+```bash
+git clone https://github.com/yourusername/magenta-mind.git
+cd magenta-mind
+
+npm install
+npm run dev
 ```
 
-## Temporal reasoning (the core highlight)
+Open **http://localhost:3000**
 
-- Every transcript segment and visual description carries `start_seconds` /
-  `end_seconds`.
-- At retrieval time, hits from the same file are grouped by time window, so
-  "this chart appears while the speaker says X" is a single grounded source.
-- Citations in the answer are clickable: they seek the video player to the
-  exact timestamp (with relevance markers on the progress bar) or open the
-  document at the cited page.
+---
 
-## Key files
+## ✦ Project Structure
 
-| Path | Purpose |
-| --- | --- |
-| `src/lib/rag.server.ts` | AI gateway calls: extraction, transcription, embeddings, synthesis |
-| `src/lib/rag.functions.ts` | Server functions: `processFile`, `searchKnowledge` |
-| `src/routes/upload.tsx` | Drag-and-drop ingestion UI with live status |
-| `src/routes/search.tsx` | Multimodal search + split-screen result view |
-| `src/routes/files.$fileId.tsx` | Video player with markers + synced transcript |
-| `src/components/VideoPlayer.tsx` | Custom player with evidence markers |
+```text
+magenta-mind/
+├── src/
+├── public/
+├── package.json
+└── README.md
+```
 
-## Notes & limits
-- Upload limit ~25MB per file (larger media should be trimmed or compressed).
-- The app is an open demo (no login). Add authentication before storing
-  sensitive corporate content.
+---
+
+## ✦ Roadmap
+
+- Multi-user Authentication
+- Enterprise Access Control
+- Live Collaboration
+- Advanced Analytics
+- Multi-language Support
+- Cloud Deployment Templates
+
+---
+
+## ✦ Author
+
+**Mesa Sarah Vasantha Zephyr**
+
+---
+
+<div align="center">
+
+**Transform enterprise knowledge into intelligent conversations.**
+
+⭐ Star the repository if you found it useful!
+
+</div>
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
